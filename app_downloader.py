@@ -1,5 +1,6 @@
 import requests 
 import config as conf
+import subprocess
 
 class AppManager:
 	
@@ -13,27 +14,27 @@ class AppManager:
 		try:
 			r = requests.get(self.full_url)
                         if r.status_code < 300:
-                        	 apps = r.json()
-                                 if len(apps) > 0:
-					 print apps
-                                         print "We found apps"
+                        	 app = r.json()
                         else:
-                                 print self.full_url
                                  print "Error code %d" % r.status_code
                 except Exception as e:
-			print e
                         print self.full_url
+	
 	def install(self):
-		self.get()
-		self.download_dependencies()
-		self.execute_dependency()
+		app_info = self.get()
+		for dep in app_info["dependencies"]
+			self.install_dependency(dep)
 		self.update()
 
 	def download_dependencies(self):
 		pass
 
-	def execute_dependency(self):
-		pass
+	def install_dependency(self, dep):
+		bash_command = "apt-get install %s" % dep.name
+                process = subprocess.Popen(bash_command.split(), stdout=subprocess.PIPE)
+                output = process.communicate()[0]
+                print output
+
 
 	def update(self):
 		pass
