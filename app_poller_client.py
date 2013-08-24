@@ -1,10 +1,8 @@
 import time
 from app_poller import *
 
-url = "http://10.0.0.238:56653/api"
-endpoint = "/values"
-app_poller = AppPoller(url, endpoint)
+app_poller = AppPoller()
 app_poller.start()
-time.sleep(10)
+time.sleep(15)
 app_poller.stop()
 

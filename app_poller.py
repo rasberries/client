@@ -1,5 +1,5 @@
 
-import config
+import config as conf
 from cpu_info import *
 import time
 from threading import Thread
@@ -12,7 +12,7 @@ class AppPoller:
 	stop_polling = False
 	
 	def __init__(self, endpoint = "/values", timeout = 2):
-		self.base_url = config.base_url
+		self.base_url = conf.base_url()
 		self.endpoint = endpoint
 		self.timeout = timeout
 		self.serial_id = self.cpu_info.get_serial()
@@ -32,13 +32,15 @@ class AppPoller:
 				if r.status_code < 300:
 					apps = r.json()
 					if len(apps) > 0: 
-						print apps
+						#print apps
 						print "We found apps"
 						time.sleep(self.timeout)
 				else:
+					print full_url
 					print "Error code %d" % r.status_code
-			except Error as e:
+			except Exception as e:
 				print e
+				print full_url
 			finally:
 				print "Sleeping"
 				time.sleep(self.timeout)
