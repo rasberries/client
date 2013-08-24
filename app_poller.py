@@ -34,7 +34,6 @@ class AppPoller:
 					if len(apps) > 0: 
 						#print apps
 						print "We found apps"
-						time.sleep(self.timeout)
 				else:
 					print full_url
 					print "Error code %d" % r.status_code
