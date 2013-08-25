@@ -1,5 +1,5 @@
 
-from app_downloader import *
+from app_manager import *
 import config as conf
 from cpu_info import *
 import time
