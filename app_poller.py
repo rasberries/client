@@ -19,7 +19,7 @@ class AppPoller:
 		self.serial_id = self.cpu_info.get_serial()
 		self.full_url = "%s/%s/%s/apps" % (self.base_url, self.endpoint, self.serial_id)
 		def handler(signum, frame):
-                        self.stop_polling = True
+			self.stop()
                 signal.signal(signal.SIGINT, handler)
 	
 	def start(self):
@@ -49,4 +49,4 @@ class AppPoller:
 				time.sleep(self.timeout)
 		
 	def stop(self):
-		self. stop_polling = True
+		self.stop_polling = True
