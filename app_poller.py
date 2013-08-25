@@ -30,10 +30,12 @@ class AppPoller:
 		while not self.stop_polling:
 			try:
 				r = requests.get(self.full_url)
+				#print self.full_url
 				if r.status_code < 300:
 					apps = r.json()
 					if len(apps) > 0:						
 						for app in apps:
+							#print app
 							if len (app["app_stack"]) > 0 :
 								for app_id in app["app_stack"]:
 									app_manager = AppManager(app_id)
