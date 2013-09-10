@@ -11,7 +11,7 @@ import signal
 class AppPoller:
 	cpu_info = CpuInfo()
 	stop_polling = False
-	
+
 	def __init__(self, endpoint = "devices", timeout = 2):
 		self.base_url = conf.base_url()
 		self.endpoint = endpoint
@@ -21,7 +21,7 @@ class AppPoller:
 		def handler(signum, frame):
 			self.stop()
                 signal.signal(signal.SIGINT, handler)
-	
+
 	def start(self):
 		thread = Thread(target = self.poll_thread)
 		thread.start()
@@ -33,9 +33,8 @@ class AppPoller:
 				#print self.full_url
 				if r.status_code < 300:
 					apps = r.json()
-					if len(apps) > 0:						
+					if len(apps) > 0:
 						for app in apps:
-							#print app
 							if len (app["app_stack"]) > 0 :
 								for app_id in app["app_stack"]:
 									app_manager = AppManager(app_id)
@@ -47,6 +46,6 @@ class AppPoller:
 			finally:
 				print "Sleeping"
 				time.sleep(self.timeout)
-		
+
 	def stop(self):
 		self.stop_polling = True

@@ -1,5 +1,5 @@
 from cpu_info import *
-import requests 
+import requests
 import config as conf
 import json
 import random
@@ -8,14 +8,14 @@ import subprocess
 import urllib2
 
 class AppManager:
-	
+
 	def __init__(self, app_id, endpoint = "apps", ):
 		self.base_url = conf.base_url()
-		self.base_path = conf.base_path() 
+		self.base_path = conf.base_path()
 		self.app_id = app_id
 		self.endpoint = endpoint
 		self.full_url = "%s/%s/%s" % (self.base_url, self.endpoint, self.app_id)
-	
+
 	def get(self):
 		try:
 			r = requests.get(self.full_url)
@@ -27,14 +27,14 @@ class AppManager:
                                  print "Error code %d" % r.status_code
                 except Exception as e:
                         print self.full_url
-	
+
 	def install(self):
 		try:
 			app_info = self.get()
 			for dep in app_info["stubs"]:
 				self.install_dependency(dep)
 		except Exception as e:
-			print "Failed to install app %s"  % e  
+			print "Failed to install app %s"  % e
 		self.update(app_info['id'])
 
 	def download_dependency(self, dep_url):
@@ -42,7 +42,7 @@ class AppManager:
 		os.makedirs(dep_folder)
 		dep_file = dep_url.split('/')[-1]
 		dep_path = "%s/%s" % (dep_folder, dep_file)
-		self.download_file(dep_url, dep_path)	
+		self.download_file(dep_url, dep_path)
 		return dep_path
 
 	def install_dependency(self, dep):

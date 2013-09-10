@@ -1,7 +1,8 @@
 import configparser
+import os
 
 config = configparser.ConfigParser()
-config.read("/root/python-client/client/config/config.ini")
+config.read(os.path.dirname(os.path.realpath(__file__)) + "/config.ini")
 
 def base_url():
 	return  config["DEFAULT"]["base_url"]
